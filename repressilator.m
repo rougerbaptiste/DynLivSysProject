@@ -1,11 +1,11 @@
 % REPRESSILATOR
-
+clf;
 clear all; 
 
 %% Parameters
 
-alpha = 0.5 ;% Promoter strength, from 5,10^4 to 0,5
-alpha0 = 10^2 ;% Leakiness of the promoter. can be 0, 10^(-3), ...
+alpha = 10^2 ;% Promoter strength, from 5,10^4 to 0,5
+alpha0 = 0 ;% Leakiness of the promoter. can be 0, 10^(-3), ...
 beta = 10^2 ;% Average translation efficiency (IN PROT/TRANSCRIPT)
 n = 2; % Hill coefficient
 % Km = 40 ; % (IN MONOMERS/CELL)
@@ -20,9 +20,9 @@ PtetR = 0;
 PcI = 0;
 
 % mRNAs concentrations 
-MlacI = 1;
-MtetR = 2;
-McI = 3;
+MlacI = 10;
+MtetR = 20;
+McI = 30;
 
 % Denominations 
 p(1) = PlacI;
@@ -34,7 +34,7 @@ m(3) = McI;
 
 t=0;
 tEnd = 10;
-tStep = 0.1;
+tStep = 0.001;
 
 P = zeros(tEnd/tStep, 3);
 M = zeros(tEnd/tStep, 3);
@@ -50,22 +50,14 @@ while t <= tEnd
         
     
     %%% mRNA
-    dmLac = - m(1) + alpha./(1 + p(2).^n) + alpha0;
-    dmTet = - m(2) + alpha./(1 + p(3).^n) + alpha0;
-    dmI = - m(3) + alpha./(1 + p(1).^n) + alpha0;
+    m(1) = (- m(1) + alpha./(1 + p(2).^n) + alpha0)*tStep + m(1);
+    m(2) = (- m(2) + alpha./(1 + p(3).^n) + alpha0)*tStep + m(2);
+    m(3) = (- m(3) + alpha./(1 + p(1).^n) + alpha0)*tStep + m(3);
     
     %%% Proteins
-    dpLac = - beta*(p(1)-m(1));
-    dpTet = - beta*(p(2)-m(2));
-    dpI = - beta*(p(3)-m(3));
-    
-    
-    m(1) = dmLac;
-    m(2) = dmTet;
-    m(3) = dmI;
-    p(1) = dpLac;
-    p(2) = dpTet;
-    p(3) = dpI;
+    p(1) = (- beta*(p(1)-m(1)))*tStep + p(1);
+    p(2) = (- beta*(p(2)-m(2)))*tStep + p(2);
+    p(3) = (- beta*(p(3)-m(3)))*tStep + p(3);
     
     i = i + 1;
     t(end +1) = t(end) + tStep; 
@@ -75,16 +67,13 @@ P(end+1,:) = p(end,:);
 
 
 subplot(2,1,1)
-plot(t,M(:,1), 'c')
+plot(t,M(:,1))
 hold on;
-plot(t,M(:,2), 'g')
-hold on;
+plot(t,M(:,2))
 plot(t,M(:,3))
-%
-%subplot(2,1,2)
-%plot(t,P(:,1))
-%hold on;
-%plot(t,P(:,2))
-%plot(t,P(:,3))
 
-pause;
+subplot(2,1,2)
+plot(t,P(:,1))
+hold on;
+plot(t,P(:,2))
+plot(t,P(:,3))
