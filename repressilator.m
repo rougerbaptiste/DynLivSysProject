@@ -2,6 +2,7 @@
 clf;
 clear all; 
 
+
 %% Parameters
 
 alpha = 10^2 ;% Promoter strength, from 5,10^4 to 0,5
