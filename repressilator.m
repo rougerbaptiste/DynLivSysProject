@@ -39,6 +39,8 @@ tStep = 0.001;
 P = zeros(tEnd/tStep, 3); % Number of proteins
 M = zeros(tEnd/tStep, 3); % Number of mRNA
 
+%% Reactions 
+
 i=1;
 while t <= tEnd
     P(i, 1) = p(1);
@@ -65,6 +67,7 @@ end
 M(end+1,:) = m(end,:); 
 P(end+1,:) = p(end,:); % last values
 
+%% Plots
 
 subplot(2,1,1)
 plot(t,M(:,1))
