@@ -36,8 +36,8 @@ t=0;
 tEnd = 10;
 tStep = 0.001;
 
-P = zeros(tEnd/tStep, 3);
-M = zeros(tEnd/tStep, 3);
+P = zeros(tEnd/tStep, 3); % Number of proteins
+M = zeros(tEnd/tStep, 3); % Number of mRNA
 
 i=1;
 while t <= tEnd
@@ -46,7 +46,7 @@ while t <= tEnd
     P(i, 3) = p(3);
     M(i, 1) = m(1);
     M(i, 2) = m(2);
-    M(i, 3) = m(3);
+    M(i, 3) = m(3); % storage of the values along the experiment
         
     
     %%% mRNA
@@ -59,11 +59,11 @@ while t <= tEnd
     p(2) = (- beta*(p(2)-m(2)))*tStep + p(2);
     p(3) = (- beta*(p(3)-m(3)))*tStep + p(3);
     
-    i = i + 1;
+    i = i + 1; 
     t(end +1) = t(end) + tStep; 
 end
-M(end+1,:) = m(end,:);
-P(end+1,:) = p(end,:);
+M(end+1,:) = m(end,:); 
+P(end+1,:) = p(end,:); % last values
 
 
 subplot(2,1,1)
@@ -76,4 +76,4 @@ subplot(2,1,2)
 plot(t,P(:,1))
 hold on;
 plot(t,P(:,2))
-plot(t,P(:,3))
+plot(t,P(:,3)) 
