@@ -74,9 +74,15 @@ plot(t,M(:,1))
 hold on;
 plot(t,M(:,2))
 plot(t,M(:,3))
+xlabel('Time')
+ylabel('Concentrations')
+legend('LacI mRNA','TetR mRNA','CI mRNA')
 
 subplot(2,1,2)
 plot(t,P(:,1))
 hold on;
 plot(t,P(:,2))
 plot(t,P(:,3)) 
+xlabel('Time')
+ylabel('Concentrations')
+legend('LacI Protein','TetR Protein','CI Protein')
