@@ -1,6 +1,14 @@
 % REPRESSILATOR
 clf; clear all;
 
+Delta=zeros();
+MeanLacI=zeros();
+C=zeros();
+tend=10;
+tstep=0.5;
+Autocorr=zeros(1,tend/tstep);
+j=1;
+
 %% Parameters
 
 alpha = 10^3 ;% Promoter strength, from 5,10^4 to 0,5
@@ -32,7 +40,7 @@ m(2) = MtetR;
 m(3) = McI;
 
 t=0;
-tEnd = 200;
+tEnd = 10;
 tStep = 0.001;
 
 P = zeros(tEnd/tStep, 3); % Number of proteins
@@ -72,29 +80,23 @@ M(end+1,:) = m(end,:);
 P(end+1,:) = p(end,:); % last values
 
 MeanLacI=mean(P(:,1));
-
 %% Autocorrelation
 
-Delta=zeros();
-MeanLacI=zeros();
-C=zeros();
-tend=10;
-tstep=0.5;
-Autocorr=zeros(1,tend/tstep);
-j=1;
-
-for delta = 1:tstep:length(P)  
+for delta = 1:tstep:length(P)
+        
+    if j<1
+        j=j+1;
+    end
     
     if 1+j<=length(P)
-        
+                
         C= ((P(1+j,1)-MeanLacI) * (P(1,1)-MeanLacI) ) / (MeanLacI)^2;
         
         Autocorr(j)=C;
-        Delta(end+1)=delta;
+
     end
     
-    j=j+1;
 end
 
 
-plot(Delta(2:end-1),Autocorr(2:end))
+plot(delta,Autocorr)

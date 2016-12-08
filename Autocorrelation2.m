@@ -1,6 +1,7 @@
 clear all; clf; %We clear the workspace
 
-tEnd = 60*100; %tEnd is the time at which the simulation stops
+
+tEnd = 60*200; %tEnd is the time at which the simulation stops
 tStep = 0.001;
 
 % Here we have to put the initial concentrations of the species
@@ -92,28 +93,33 @@ while t(end) <= tEnd
     deltaT = - log(rand2)./sum(props);
     t(end+1) = t(end) + deltaT;
 
-%     disp(t(end));
 end
 
-%% mRNA concentrations
-figure(1)
-plot(t,Species(:,1))
-hold on;
-plot(t,Species(:,2))
-plot(t,Species(:,3))
-xlabel('Time')
-ylabel('Concentrations')
-legend('LacI mRNA','TetR mRNA','CI mRNA')
 
-%% proteins concentrations
+%% Autocorrelation
 
-figure(2)
-plot(t,Species(:,4))
-hold on;
-plot(t,Species(:,5))
-plot(t,Species(:,6))
-xlabel('Time')
-ylabel('Concentrations')
-legend('LacI Protein','TetR Protein','CI Protein')
+Delta=zeros();
+MeanLacI=zeros();
+C=zeros();
+tend=10;
+tstep=0.5; %for autocorrelation
+Autocorr=zeros(1,tend/tstep);
+j=1;
 
-autocorr(Species(:,4));
+MeanLacI=mean(Species(:,4)); 
+
+for delta = 1:tstep:length(Species)  
+    
+    if 1+j<=length(Species)
+        
+        C= ((Species(1+j,4)-MeanLacI) * (Species(1,4)-MeanLacI) ) / (MeanLacI)^2;
+        
+        Autocorr(j)=C;
+        Delta(end+1)=delta;
+    end
+    
+    j=j+1;
+end
+
+
+plot(Delta(2:end-1),Autocorr(2:end))
