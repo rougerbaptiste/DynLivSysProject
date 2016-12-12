@@ -8,7 +8,7 @@ alpha = [10^0 10^(0.25) 10^(0.5) 10^(0.75) 10^1 10^(1.25) 10^(1.5) 10^(1.75) 10^
 beta = [10^0 10^(0.25) 10^(0.5) 10^(0.75) 10^1 10^(1.25) 10^(1.5) 10^(1.75) 10^2 10^(2.25) 10^(2.5) 10^(2.75) 10^3];% Average translation efficiency (IN PROT/TRANSCRIPT)
 
 alpha0 = 0 ;% Leakiness of the promoter. can be 0, 10^(-3), ...
-n = 2; % Hill coefficient
+n = 1; % Hill coefficient
 % Km = 40 ; % (IN MONOMERS/CELL)
 % Phl = 10 % protein half life (IN MIN)
 % Mhl = 2 %mRNA half life (IN MIN)
@@ -109,5 +109,3 @@ for j=1:length(alpha)
         
     end
 end
-
-%% Plots
