@@ -32,7 +32,7 @@ m(2) = MtetR;
 m(3) = McI;
 
 t=0;
-tEnd = 200;
+tEnd = 60;
 tStep = 0.001;
 
 P = zeros(tEnd/tStep, 3); % Number of proteins
@@ -75,26 +75,9 @@ MeanLacI=mean(P(:,1));
 
 %% Autocorrelation
 
-Delta=zeros();
-MeanLacI=zeros();
-C=zeros();
-tend=10;
-tstep=0.5;
-Autocorr=zeros(1,tend/tstep);
-j=1;
+for i=1:length(P), %here i-1 is equal to Delta in units of deltax
+   c(i) = sum(P(end-i+1,1).*P(i:end,1));
+end;
+c = c/(MeanLacI)^2; %for normalization
 
-for delta = 1:tstep:length(P)  
-    
-    if 1+j<=length(P)
-        
-        C= ((P(1+j,1)-MeanLacI) * (P(1,1)-MeanLacI) ) / (MeanLacI)^2;
-        
-        Autocorr(j)=C;
-        Delta(end+1)=delta;
-    end
-    
-    j=j+1;
-end
-
-
-plot(Delta(2:end-1),Autocorr(2:end))
+plot(c)

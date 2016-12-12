@@ -4,10 +4,9 @@ clear all;
 
 %% Parameters
 
-alpha = [10^0 10^(0.5) 10^1 10^(1.5) 10^2 10^(2.5) 10^3 10^(3.5) 10^4 10^(4.5)];% Promoter strength, from 5,10^4 to 0,5
-alphav = [0 0.5 1 1.5 2 2.5 3 3.5 4 4.5]; %to use in the plot
-beta = [10^0 10^(0.5) 10^1 10^(1.5) 10^2 10^(2.5) 10^3];% Average translation efficiency (IN PROT/TRANSCRIPT)
-betav = [0 0.5 1 1.5 2 2.5 3]; %to use in the plot
+alpha = [10^0 10^(0.25) 10^(0.5) 10^(0.75) 10^1 10^(1.25) 10^(1.5) 10^(1.75) 10^2 10^(2.25) 10^(2.5) 10^(2.75) 10^3 10^(3.25) 10^(3.5) 10^(3.75) 10^4 10^(4.25) 10^(4.5) 10^(4.75)];% Promoter strength, from 5,10^4 to 0,5
+beta = [10^0 10^(0.25) 10^(0.5) 10^(0.75) 10^1 10^(1.25) 10^(1.5) 10^(1.75) 10^2 10^(2.25) 10^(2.5) 10^(2.75) 10^3];% Average translation efficiency (IN PROT/TRANSCRIPT)
+
 alpha0 = 0 ;% Leakiness of the promoter. can be 0, 10^(-3), ...
 n = 2; % Hill coefficient
 % Km = 40 ; % (IN MONOMERS/CELL)
@@ -91,11 +90,11 @@ for j=1:length(alpha)
         
         %% Dividing the values in two categories : the ones with oscillations, the ones without
         
-        if OSCindex(j,k)>0.1
-            Oscil(:,end+1)=[alphav(j);betav(k)];
+        if OSCindex(j,k)>0.094
+            Oscil(:,end+1)=[log(alpha(j));log(beta(k))];
                         
         else 
-            Noscil(:,end+1)=[alphav(j);betav(k)];
+            Noscil(:,end+1)=[log(alpha(j));log(beta(k))];
       
         end
         

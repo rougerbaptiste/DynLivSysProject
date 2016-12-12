@@ -108,11 +108,11 @@ j=1;
 
 MeanLacI=mean(Species(:,4)); 
 
-for delta = 1:tstep:length(Species)  
+for delta = 300*tstep:tstep:length(Species)  
     
     if 1+j<=length(Species)
         
-        C= ((Species(1+j,4)-MeanLacI) * (Species(1,4)-MeanLacI) ) / (MeanLacI)^2;
+        C= mean((Species(1+j,4)-MeanLacI) * (Species(1,4)-MeanLacI) )/ (MeanLacI)^2;
         
         Autocorr(j)=C;
         Delta(end+1)=delta;
