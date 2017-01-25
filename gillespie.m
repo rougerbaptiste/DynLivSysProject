@@ -35,6 +35,7 @@ species(3) = McI;
 species(4) = PlacI;
 species(5) = PtetR;
 species(6) = PcI;
+Species = species; %will contain the concentrations of the species over the time
 
 
 
@@ -46,7 +47,6 @@ alphaP = 1/6;
 leakiness = 5e-04;
 n = 2; %hill coefficient
 
-Species = species; %will contain the concentrations of the species over the time
 
 
 t = 0; % t is the vector containing the times
@@ -70,25 +70,13 @@ while t(end) <= tEnd
 
     propsum = cumsum(props);
     pickingVector = propsum/propsum(end);
-
-    rand1 = rand();%rand for reaction
-
+    rand1 = rand(); % rand for reaction
     selectedReact = find(pickingVector>rand1,1);
-
     species = species + stoich(selectedReact,:);
-
 
     Species(end+1,:) = species;
 
-
-
-
-
-    rand2 = rand();% rand for time
-
-
-
-
+    rand2 = rand(); % rand for time
     deltaT = - log(rand2)./sum(props);
     t(end+1) = t(end) + deltaT;
 
